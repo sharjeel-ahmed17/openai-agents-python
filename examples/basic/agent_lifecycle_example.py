@@ -6,6 +6,8 @@ from pydantic import BaseModel
 
 from agents import Agent, AgentHooks, RunContextWrapper, Runner, Tool, function_tool
 
+from agentsdk_gemini_adapter import config
+
 
 class CustomAgentHooks(AgentHooks):
     def __init__(self, display_name: str):
@@ -89,6 +91,7 @@ async def main() -> None:
         await Runner.run(
             start_agent,
             input=f"Generate a random number between 0 and {max_number}.",
+            run_config=config,
         )
     except ValueError:
         print("Please enter a valid integer.")

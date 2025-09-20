@@ -3,6 +3,7 @@ import asyncio
 from pydantic import BaseModel
 
 from agents import Agent, Runner, trace
+from agentsdk_gemini_adapter import config
 
 """
 This example demonstrates a deterministic flow, where each step is performed by an agent.
@@ -47,6 +48,7 @@ async def main():
         outline_result = await Runner.run(
             story_outline_agent,
             input_prompt,
+            run_config=config,
         )
         print("Outline generated")
 
@@ -54,6 +56,7 @@ async def main():
         outline_checker_result = await Runner.run(
             outline_checker_agent,
             outline_result.final_output,
+            run_config=config,
         )
 
         # 3. Add a gate to stop if the outline is not good quality or not a scifi story
@@ -72,6 +75,7 @@ async def main():
         story_result = await Runner.run(
             story_agent,
             outline_result.final_output,
+            run_config=config,
         )
         print(f"Story: {story_result.final_output}")
 

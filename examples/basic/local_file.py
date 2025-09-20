@@ -5,6 +5,7 @@ import os
 from agents import Agent, Runner
 
 FILEPATH = os.path.join(os.path.dirname(__file__), "media/partial_o3-and-o4-mini-system-card.pdf")
+from agentsdk_gemini_adapter import config
 
 
 def file_to_base64(file_path: str) -> str:
@@ -37,6 +38,8 @@ async def main():
                 "content": "What is the first sentence of the introduction?",
             },
         ],
+
+        run_config=config,
     )
     print(result.final_output)
 

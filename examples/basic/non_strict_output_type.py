@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from agents import Agent, AgentOutputSchema, AgentOutputSchemaBase, Runner
+from agentsdk_gemini_adapter import config
 
 """This example demonstrates how to use an output type that is not in strict mode. Strict mode
 allows us to guarantee valid JSON output, but some schemas are not strict-compatible.
@@ -59,7 +60,7 @@ async def main():
 
     # First, let's try with a strict output type. This should raise an exception.
     try:
-        result = await Runner.run(agent, input)
+        result = await Runner.run(agent, input, run_config=config)
         raise AssertionError("Should have raised an exception")
     except Exception as e:
         print(f"Error (expected): {e}")
@@ -68,12 +69,12 @@ async def main():
     # In some cases, it will raise an error - the schema isn't strict, so the model may
     # produce an invalid JSON object.
     agent.output_type = AgentOutputSchema(OutputType, strict_json_schema=False)
-    result = await Runner.run(agent, input)
+    result = await Runner.run(agent, input , run_config=config)
     print(result.final_output)
 
     # Finally, let's try a custom output type.
     agent.output_type = CustomOutputSchema()
-    result = await Runner.run(agent, input)
+    result = await Runner.run(agent, input , run_config=config)
     print(result.final_output)
 
 

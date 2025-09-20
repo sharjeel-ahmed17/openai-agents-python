@@ -3,6 +3,7 @@ import random
 from typing import Literal
 
 from agents import Agent, RunContextWrapper, Runner
+from agentsdk_gemini_adapter import config
 
 
 class CustomContext:
@@ -35,7 +36,7 @@ async def main():
 
     user_message = "Tell me a joke."
     print(f"User: {user_message}")
-    result = await Runner.run(agent, user_message, context=context)
+    result = await Runner.run(agent, user_message, context=context , run_config=config)
 
     print(f"Assistant: {result.final_output}")
 

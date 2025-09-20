@@ -2,7 +2,7 @@ import asyncio
 import random
 
 from agents import Agent, ItemHelpers, Runner, function_tool
-
+from agentsdk_gemini_adapter import config
 
 @function_tool
 def how_many_jokes() -> int:
@@ -20,6 +20,7 @@ async def main():
     result = Runner.run_streamed(
         agent,
         input="Hello",
+        run_config=config,
     )
     print("=== Run starting ===")
     async for event in result.stream_events():

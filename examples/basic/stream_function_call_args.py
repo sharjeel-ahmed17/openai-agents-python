@@ -4,6 +4,7 @@ from typing import Any
 from openai.types.responses import ResponseFunctionCallArgumentsDeltaEvent
 
 from agents import Agent, Runner, function_tool
+from agentsdk_gemini_adapter import config
 
 
 @function_tool
@@ -36,6 +37,7 @@ async def main():
     result = Runner.run_streamed(
         agent,
         input="Create a Python web project called 'my-app' with FastAPI. Version 1.0.0, dependencies: fastapi, uvicorn",
+        run_config=config,
     )
 
     # Track function calls for detailed output

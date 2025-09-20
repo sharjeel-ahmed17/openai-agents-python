@@ -15,7 +15,7 @@ from agents import (
     ToolsToFinalOutputResult,
     function_tool,
 )
-
+from agentsdk_gemini_adapter import config
 """
 This example shows how to force the agent to use a tool. It uses `ModelSettings(tool_choice="required")`
 to force the agent to use any tool.
@@ -77,7 +77,7 @@ async def main(tool_use_behavior: Literal["default", "first_tool", "custom"] = "
         ),
     )
 
-    result = await Runner.run(agent, input="What's the weather in Tokyo?")
+    result = await Runner.run(agent, input="What's the weather in Tokyo?" , run_config=config)
     print(result.final_output)
 
 

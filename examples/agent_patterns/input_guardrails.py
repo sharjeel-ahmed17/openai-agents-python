@@ -14,6 +14,8 @@ from agents import (
     input_guardrail,
 )
 
+from agentsdk_gemini_adapter import config
+
 """
 This example shows how to use guardrails.
 
@@ -48,7 +50,7 @@ async def math_guardrail(
     """This is an input guardrail function, which happens to call an agent to check if the input
     is a math homework question.
     """
-    result = await Runner.run(guardrail_agent, input, context=context.context)
+    result = await Runner.run(guardrail_agent, input, context=context.context , run_config=config)
     final_output = result.final_output_as(MathHomeworkOutput)
 
     return GuardrailFunctionOutput(
@@ -79,7 +81,7 @@ async def main():
         )
 
         try:
-            result = await Runner.run(agent, input_data)
+            result = await Runner.run(agent, input_data , run_config=config)
             print(result.final_output)
             # If the guardrail didn't trigger, we use the result as the input for the next run
             input_data = result.to_input_list()

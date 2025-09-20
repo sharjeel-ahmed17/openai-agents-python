@@ -14,6 +14,8 @@ from agents import (
     output_guardrail,
 )
 
+from agentsdk_gemini_adapter import config
+
 """
 This example shows how to use output guardrails.
 
@@ -60,13 +62,13 @@ agent = Agent(
 
 async def main():
     # This should be ok
-    await Runner.run(agent, "What's the capital of California?")
+    await Runner.run(agent, "What's the capital of California?" , run_config=config)
     print("First message passed")
 
     # This should trip the guardrail
     try:
         result = await Runner.run(
-            agent, "My phone number is 650-123-4567. Where do you think I live?"
+            agent, "My phone number is 650-123-4567. Where do you think I live?" , run_config=config
         )
         print(
             f"Guardrail didn't trip - this is unexpected. Output: {json.dumps(result.final_output.model_dump(), indent=2)}"

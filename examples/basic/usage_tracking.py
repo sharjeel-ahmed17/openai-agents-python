@@ -3,6 +3,7 @@ import asyncio
 from pydantic import BaseModel
 
 from agents import Agent, Runner, Usage, function_tool
+from agentsdk_gemini_adapter import config
 
 
 class Weather(BaseModel):
@@ -32,7 +33,7 @@ async def main() -> None:
         tools=[get_weather],
     )
 
-    result = await Runner.run(agent, "What's the weather in Tokyo?")
+    result = await Runner.run(agent, "What's the weather in Tokyo?" , run_config=config)
 
     print("\nFinal output:")
     print(result.final_output)

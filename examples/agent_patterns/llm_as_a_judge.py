@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from typing import Literal
 
 from agents import Agent, ItemHelpers, Runner, TResponseInputItem, trace
+from agentsdk_gemini_adapter import config
 
 """
 This example shows the LLM as a judge pattern. The first agent generates an outline for a story.
@@ -50,13 +51,14 @@ async def main() -> None:
             story_outline_result = await Runner.run(
                 story_outline_generator,
                 input_items,
+                run_config=config,
             )
 
             input_items = story_outline_result.to_input_list()
             latest_outline = ItemHelpers.text_message_outputs(story_outline_result.new_items)
             print("Story outline generated")
 
-            evaluator_result = await Runner.run(evaluator, input_items)
+            evaluator_result = await Runner.run(evaluator, input_items , run_config=config)
             result: EvaluationFeedback = evaluator_result.final_output
 
             print(f"Evaluator score: {result.score}")

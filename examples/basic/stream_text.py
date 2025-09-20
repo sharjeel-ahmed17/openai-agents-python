@@ -3,6 +3,7 @@ import asyncio
 from openai.types.responses import ResponseTextDeltaEvent
 
 from agents import Agent, Runner
+from agentsdk_gemini_adapter import config
 
 
 async def main():
@@ -11,7 +12,7 @@ async def main():
         instructions="You are a helpful assistant.",
     )
 
-    result = Runner.run_streamed(agent, input="Please tell me 5 jokes.")
+    result = Runner.run_streamed(agent, input="Please tell me 5 jokes." , run_config=config)
     async for event in result.stream_events():
         if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):
             print(event.data.delta, end="", flush=True)

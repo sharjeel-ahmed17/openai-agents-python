@@ -1,7 +1,7 @@
 import asyncio
 
 from agents import Agent, Runner
-
+from agentsdk_gemini_adapter import config
 """This demonstrates usage of the `previous_response_id` parameter to continue a conversation.
 The second run passes the previous response ID to the model, which allows it to continue the
 conversation without re-sending the previous messages.
@@ -20,7 +20,7 @@ async def main():
         instructions="You are a helpful assistant. be VERY concise.",
     )
 
-    result = await Runner.run(agent, "What is the largest country in South America?")
+    result = await Runner.run(agent, "What is the largest country in South America?" , run_config=config)
     print(result.final_output)
     # Brazil
 
@@ -28,6 +28,8 @@ async def main():
         agent,
         "What is the capital of that country?",
         previous_response_id=result.last_response_id,
+        run_config=config,
+    
     )
     print(result.final_output)
     # Brasilia
@@ -39,7 +41,7 @@ async def main_stream():
         instructions="You are a helpful assistant. be VERY concise.",
     )
 
-    result = Runner.run_streamed(agent, "What is the largest country in South America?")
+    result = Runner.run_streamed(agent, "What is the largest country in South America?", run_config=config)
 
     async for event in result.stream_events():
         if event.type == "raw_response_event" and event.data.type == "response.output_text.delta":
@@ -51,6 +53,7 @@ async def main_stream():
         agent,
         "What is the capital of that country?",
         previous_response_id=result.last_response_id,
+        run_config=config,
     )
 
     async for event in result.stream_events():

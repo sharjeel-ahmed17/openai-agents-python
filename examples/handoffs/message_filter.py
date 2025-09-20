@@ -6,6 +6,7 @@ import random
 from agents import Agent, HandoffInputData, Runner, function_tool, handoff, trace
 from agents.extensions import handoff_filters
 from agents.models import is_gpt_5_default
+from agentsdk_gemini_adapter import config
 
 
 @function_tool
@@ -67,7 +68,7 @@ async def main():
     # Trace the entire run as a single workflow
     with trace(workflow_name="Message filtering"):
         # 1. Send a regular message to the first agent
-        result = await Runner.run(first_agent, input="Hi, my name is Sora.")
+        result = await Runner.run(first_agent, input="Hi, my name is Sora." , run_config=config)
 
         print("Step 1 done")
 
@@ -76,6 +77,7 @@ async def main():
             first_agent,
             input=result.to_input_list()
             + [{"content": "Can you generate a random number between 0 and 100?", "role": "user"}],
+            run_config=config,
         )
 
         print("Step 2 done")
@@ -90,6 +92,7 @@ async def main():
                     "role": "user",
                 }
             ],
+            run_config=config,
         )
 
         print("Step 3 done")
@@ -104,6 +107,7 @@ async def main():
                     "role": "user",
                 }
             ],
+            run_config=config
         )
 
         print("Step 4 done")

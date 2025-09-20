@@ -5,6 +5,7 @@ import os
 from agents import Agent, Runner
 
 FILEPATH = os.path.join(os.path.dirname(__file__), "media/image_bison.jpg")
+from agentsdk_gemini_adapter import config
 
 
 def image_to_base64(image_path):
@@ -40,6 +41,7 @@ async def main():
                 "content": "What do you see in this image?",
             },
         ],
+        run_config=config,
     )
     print(result.final_output)
 

@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 from agents import Agent, AgentBase, RunContextWrapper, Runner, trace
 
+from agentsdk_gemini_adapter import config
 """
 This example demonstrates the agents-as-tools pattern with conditional tool enabling.
 Agent tools are dynamically enabled/disabled based on user access levels using the
@@ -104,6 +105,7 @@ async def main():
             starting_agent=orchestrator,
             input=user_request,
             context=context.context,
+            run_config=config,
         )
 
         print(f"\nResponse:\n{result.final_output}")

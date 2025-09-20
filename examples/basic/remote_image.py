@@ -3,6 +3,7 @@ import asyncio
 from agents import Agent, Runner
 
 URL = "https://upload.wikimedia.org/wikipedia/commons/0/0c/GoldenGateBridge-001.jpg"
+from agentsdk_gemini_adapter import config
 
 
 async def main():
@@ -23,6 +24,7 @@ async def main():
                 "content": "What do you see in this image?",
             },
         ],
+        run_config=config,
     )
     print(result.final_output)
 

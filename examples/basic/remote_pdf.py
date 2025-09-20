@@ -3,6 +3,7 @@ import asyncio
 from agents import Agent, Runner
 
 URL = "https://www.berkshirehathaway.com/letters/2024ltr.pdf"
+from agentsdk_gemini_adapter import config
 
 
 async def main():
@@ -23,6 +24,7 @@ async def main():
                 "content": "Can you summarize the letter?",
             },
         ],
+        run_config=config,
     )
     print(result.final_output)
 

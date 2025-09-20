@@ -2,6 +2,7 @@ import asyncio
 
 from agents import Agent, ItemHelpers, MessageOutputItem, Runner, trace
 
+from agentsdk_gemini_adapter import config
 """
 This example shows the agents-as-tools pattern. The frontline agent receives a user message and
 then picks which agents to call, as tools. In this case, it picks from a set of translation
@@ -60,7 +61,7 @@ async def main():
 
     # Run the entire orchestration in a single trace
     with trace("Orchestrator evaluator"):
-        orchestrator_result = await Runner.run(orchestrator_agent, msg)
+        orchestrator_result = await Runner.run(orchestrator_agent, msg , run_config=config)
 
         for item in orchestrator_result.new_items:
             if isinstance(item, MessageOutputItem):
@@ -69,7 +70,7 @@ async def main():
                     print(f"  - Translation step: {text}")
 
         synthesizer_result = await Runner.run(
-            synthesizer_agent, orchestrator_result.to_input_list()
+            synthesizer_agent, orchestrator_result.to_input_list() , run_config=config
         )
 
     print(f"\n\nFinal response:\n{synthesizer_result.final_output}")
